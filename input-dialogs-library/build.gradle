@@ -1,0 +1,92 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+group properties.getProperty("bintray.groupId")
+version properties.getProperty("version.number")
+def siteUrl = properties.getProperty("vcsUrl")
+def gitUrl = properties.getProperty("gitUrl")
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+
+    defaultConfig {
+        minSdkVersion 12
+        targetSdkVersion 25
+        versionCode properties.getProperty("version.sequence").toInteger()
+        versionName properties.getProperty("version.number")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+bintray {
+    user = properties.getProperty("bintray.user")//username
+    key = properties.getProperty("bintray.apikey")//API key
+    publish = true
+
+    pkg {
+        repo = properties.getProperty("bintray.repo")//repo
+        name = properties.getProperty("bintray.package")
+        userOrg = properties.getProperty("bintray.userOrg")
+
+        configurations = ['archives']
+        licenses = ['Apache-2.0']
+        vcsUrl = properties.getProperty("vcsUrl")
+        labels = ['android', 'input', 'dialogs']
+        publicDownloadNumbers = true
+        attributes= ['a': ['ay1', 'ay2'], 'b': ['bee'], c: 'cee'] //Optional package-level attributes
+        version {
+            name = properties.getProperty("version.number")
+            desc = properties.getProperty("version.name")
+            vcsTag = properties.getProperty("version.number")
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+
+            name properties.getProperty("version.name")
+            url siteUrl
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+            developers {
+                developer {
+                    id 'maiconhellmann'
+                    name 'Maicon Hellmann'
+                    email 'maiconhellmann@gmail.com'
+                }
+            }
+            scm {
+                connection siteUrl
+                developerConnection gitUrl
+                url siteUrl
+
+            }
+        }
+
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+}
