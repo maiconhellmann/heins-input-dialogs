@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/calculator_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/currency"
+            android:textColor="@color/colorSecondaryText"
+            android:layout_alignBottom="@+id/calculator_value"
+            android:gravity="center"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:padding="@dimen/calculator_result_padding"
+            android:id="@+id/calculator_value"
+            android:layout_width="match_parent"
+            android:clickable="false"
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:lines="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_toRightOf="@+id/calculator_currency"
+            android:layout_toLeftOf="@+id/calculator_backspace"
+            android:paddingRight="15dp"
+            android:text="@string/calculator_0"
+            android:textSize="30sp"
+            android:gravity="end"/>
+
+        <ImageButton
+            android:background="@color/white"
+            android:padding="@dimen/calculator_result_padding"
+            android:id="@+id/calculator_backspace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_backspace_black_24dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/calculator_value"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/calculator_7"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_7"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_8"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_8"
+            android:textSize="@dimen/calculator_button_text_size"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_9"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_9"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/calculator_button_text_size"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/calculator_button_text_size"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/calculator_4"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:text="@string/calculator_4"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_5"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_5"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:textColor="@color/colorPrimaryText"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_6"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_6"
+            android:textSize="@dimen/calculator_button_text_size"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/calculator_1"
+            android:layout_width="0dp"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:layout_weight="1"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_1"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_2"
+            android:layout_width="0dp"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/calculator_2"
+            android:textColor="@color/colorPrimaryText"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:textColor="@color/colorPrimaryText"
+            android:text="@string/calculator_3"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:weightSum="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/calculator_dot"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:text="@string/calculator_dot"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_0"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:textColor="@color/colorPrimaryText"
+            android:text="@string/calculator_0"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <Button
+            android:id="@+id/calculator_eq"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/calculator_button_text_size"
+            android:text="@string/calculator_eq"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

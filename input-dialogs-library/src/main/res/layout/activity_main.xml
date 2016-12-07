@@ -5,7 +5,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="br.com.forusers.heinsinputdialogs.MainActivity">
+    tools:context="br.com.forusers.heinsinputdialogs.example.MainActivity">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="Hello World!" />

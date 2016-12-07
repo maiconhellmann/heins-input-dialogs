@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Heins Input Dialogs</string>
+
+    <string name="calculator_0">0</string>
+    <string name="calculator_1">1</string>
+    <string name="calculator_2">2</string>
+    <string name="calculator_3">3</string>
+    <string name="calculator_4">4</string>
+    <string name="calculator_5">5</string>
+    <string name="calculator_6">6</string>
+    <string name="calculator_7">7</string>
+    <string name="calculator_8">8</string>
+    <string name="calculator_9">9</string>
+    <string name="calculator_sum">+</string>
+    <string name="calculator_sub">/</string>
+    <string name="calculator_div">/</string>
+    <string name="calculator_mul">*</string>
+    <string name="calculator_eq">=</string>
+    <string name="calculator_dot">,</string>
+    <string name="currency">R$</string>
 </resources>
