@@ -8,7 +8,7 @@ It is a library with several commonly used Input Dialogs implementations. Impelm
 
 
 ## Sample Project
-You can download the latest sample APK from this repo here: https://github.com/maiconhellmann/heins-input-dialogs/blob/master/sample/sample.apk
+You can download the latest sample APK from this repo here: https://github.com/maiconhellmann/heins-input-dialogs/blob/master/app/app-release.apk
 
 It's also on Google Play:
 
