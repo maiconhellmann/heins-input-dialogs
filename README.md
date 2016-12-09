@@ -32,7 +32,7 @@ Module/app _build.gradle_:
 ```
 dependencies {
     // ... other dependencies here
-    compile ''
+    compile 'br.com.forusers.heinsinputdialogs:input-dialogs-library:0.0.3'
 }
 ```
 
