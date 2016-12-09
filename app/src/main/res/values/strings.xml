@@ -1,7 +1,24 @@
 <resources>
     <string name="app_name">Heins Input Dialogs Demo</string>
 
-    <string name="input_calculator_double">Calculator input(Double)</string>
-    <string name="input_calculator_long">Calculator input(Long)</string>
+    <!--Calculator-->
+    <string name="input_calculator">Calculator Input Dialog</string>
+    <string name="input_calculator_double">Double value</string>
+    <string name="input_calculator_long">Long value</string>
+
+    <!--DateInput-->
+    <string name="heins_date_picker_dialog">Heins Date Picker Dialog</string>
+
+    <!--HeinsinputDialog-->
+    <string name="heins_input_dialog">Heins Input Dialog</string>
+
+    <string name="input_value">Input a value</string>
+    <string name="show_dialog">Show</string>
+    <string name="last_value">Last value: %1$s</string>
     <string name="null_value">Null value</string>
+    <string name="github">Github</string>
+
+    <string name="github_url">https://github.com/maiconhellmann/heins-input-dialogs</string>
+
+    <string name="error">Error</string>
 </resources>

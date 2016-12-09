@@ -14,13 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
-import br.com.forusers.heinsinputdialogs.interfaces.OnInputLongListener;
 
 
 /**
  * Created by hellmanss on 07/12/16.
  */
-public class CalculatorAlertDialog extends AlertDialog.Builder implements View.OnClickListener{
+public class CalculatorInputDialog extends AlertDialog.Builder implements View.OnClickListener{
 
     private static final int MAX_LENGTH = 10;
 
@@ -33,12 +32,6 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
      * input Value
      */
     private String value;
-
-    //Listeners
-    /**
-     * Listener to long value return
-     */
-    private OnInputLongListener onInputLongListener;
 
     /**
      * Listener to double value return
@@ -69,34 +62,23 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
     private Button negativeButton;
     private Button neutralButton;
 
-    public CalculatorAlertDialog(@NonNull Context context) {
+    public CalculatorInputDialog(@NonNull Context context) {
         super(context);
         setCustomView();
     }
 
-    public CalculatorAlertDialog(@NonNull Context context, @StyleRes int themeResId) {
+    public CalculatorInputDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
         setCustomView();
     }
 
-
-    public CalculatorAlertDialog(@NonNull Context context, OnInputLongListener listener) {
-        super(context);
-        onInputLongListener = listener;
-        setCustomView();
-    }
-    public CalculatorAlertDialog(@NonNull Context context, OnInputDoubleListener listener) {
+    public CalculatorInputDialog(@NonNull Context context, OnInputDoubleListener listener) {
         super(context);
         onInputDoubleListener = listener;
         setCustomView();
     }
 
-    public CalculatorAlertDialog(@NonNull Context context, @StyleRes int themeResId, OnInputLongListener listener) {
-        super(context, themeResId);
-        onInputLongListener = listener;
-        setCustomView();
-    }
-    public CalculatorAlertDialog(@NonNull Context context, @StyleRes int themeResId, OnInputDoubleListener listener) {
+    public CalculatorInputDialog(@NonNull Context context, @StyleRes int themeResId, OnInputDoubleListener listener) {
         super(context, themeResId);
         onInputDoubleListener = listener;
         setCustomView();
@@ -214,35 +196,21 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
 
     private void onclickPositiveButton() {
 
-        if(onInputDoubleListener != null){
+        if (onInputDoubleListener != null) {
+
             boolean consumedEvent = onInputDoubleListener.onInputDouble(this.dialog, parseDoubleValue());
 
-            if(!consumedEvent){
+            if (!consumedEvent) {
                 dialog.dismiss();
             }
-        }else if(onInputLongListener != null){
-            boolean consumedEvent = onInputLongListener.onInputLong(dialog, parseLongValue());
-
-            if(!consumedEvent){
-                dialog.dismiss();
-            }
-        }else if (onClickPositiveListener != null){
+        } else if (onClickPositiveListener != null) {
             onClickPositiveListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-        }else if (onClickNegativeListener != null){
+        } else if (onClickNegativeListener != null) {
             onClickNegativeListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-        }else if (onClickNeutralListener != null){
+        } else if (onClickNeutralListener != null) {
             onClickNeutralListener.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
         }
 
-    }
-
-    private Long parseLongValue() {
-        Long longValue = 0L;
-        if(!value.trim().isEmpty() && !value.equals(",")) {
-            String strValue = value.replace(",", ".");
-            longValue = Long.valueOf(strValue);
-        }
-        return longValue;
     }
 
     private Double parseDoubleValue() {
@@ -355,29 +323,12 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
         this.onInputDoubleListener = listener;
         return this;
     }
-    public AlertDialog.Builder setPositiveButton(CharSequence text, OnInputLongListener listener) {
-        if(text != null && !text.toString().trim().isEmpty()) {
-            super.setPositiveButton(text, null);
-        }else{
-            super.setPositiveButton(android.R.string.ok, null);
-        }
 
-        this.onInputLongListener = listener;
-        return this;
-    }
     public AlertDialog.Builder setPositiveButton(@StringRes int text, OnInputDoubleListener listener) {
         this.setPositiveButton(getContext().getString(text), listener);
         return this;
     }
-    public AlertDialog.Builder setPositiveButton(@StringRes int text, OnInputLongListener listener) {
-        this.setPositiveButton(getContext().getString(text), listener);
-        return this;
-    }
     public AlertDialog.Builder setPositiveButton(OnInputDoubleListener listener) {
-        this.setPositiveButton(null, listener);
-        return this;
-    }
-    public AlertDialog.Builder setPositiveButton(OnInputLongListener listener) {
         this.setPositiveButton(null, listener);
         return this;
     }
