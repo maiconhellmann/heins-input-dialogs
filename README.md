@@ -2,7 +2,7 @@
 It is a library with several commonly used Input Dialogs implementations. Impelments follow the guidelines of Google Materials Design and always with a clean and intuitive layout.
 
 ## Sample Project
-You can download the latest sample APK from this repo here: https://github.com/afollestad/material-dialogs/blob/master/sample/sample.apk
+You can download the latest sample APK from this repo here: https://github.com/maiconhellmann/heins-input-dialogs/blob/master/sample/sample.apk
 
 It's also on Google Play:
 
