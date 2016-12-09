@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickCalculatorInput(View view) {
         try{
-            CalculatorInputDialog dialog = new CalculatorInputDialog(getApplicationContext());
+            CalculatorInputDialog dialog = new CalculatorInputDialog(this);
 
             dialog.setPositiveButton(new OnInputDoubleListener() {
                 @Override
