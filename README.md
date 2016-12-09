@@ -1,6 +1,12 @@
 # heins-input-dialogs
 It is a library with several commonly used Input Dialogs implementations. Impelments follow the guidelines of Google Materials Design and always with a clean and intuitive layout.
 
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/heins_input_dialogs.png" alt="Calculator Input Dialog" width="240px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/calculator_input01.png" alt="Calculator Input Dialog" width="240px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/calculator_input02.png" alt="Calculator Input Dialog" width="240px">
+
+
+
 ## Sample Project
 You can download the latest sample APK from this repo here: https://github.com/maiconhellmann/heins-input-dialogs/blob/master/sample/sample.apk
 
@@ -40,7 +46,6 @@ dependencies {
 It is an Input Dialog for Double or Long value input.
 This component has two types of listeners: _OnInputDoubleListener_ and _OnInputLongListener_ that must be parameterized by the _setPositiveButton()_ method.
 
-<img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/heins_input_dialogs.png" alt="Calculator Input Dialog" width="240px">
 <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/calculator_input01.png" alt="Calculator Input Dialog" width="240px">
 <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/calculator_input02.png" alt="Calculator Input Dialog" width="240px">
 
