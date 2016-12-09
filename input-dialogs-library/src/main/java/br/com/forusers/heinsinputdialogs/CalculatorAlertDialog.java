@@ -2,8 +2,8 @@ package br.com.forusers.heinsinputdialogs;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.renderscript.Double2;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
@@ -11,12 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputLongListener;
 
 
 /**
  * Created by hellmanss on 07/12/16.
  */
-public class CalculatorAlertDialog extends AlertDialog.Builder implements View.OnClickListener {
+public class CalculatorAlertDialog extends AlertDialog.Builder implements View.OnClickListener{
+
+    private static final int MAX_LENGTH = 10;
+
     /**
      * Dialog reference
      */
@@ -25,14 +32,29 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
     /**
      * input Value
      */
-    private Double value;
+    private String value;
+
+    //Listeners
+    /**
+     * Listener to long value return
+     */
+    private OnInputLongListener onInputLongListener;
+
+    /**
+     * Listener to double value return
+     */
+    private OnInputDoubleListener onInputDoubleListener;
+
+    private DialogInterface.OnClickListener onClickPositiveListener;
+    private DialogInterface.OnClickListener onClickNegativeListener;
+    private DialogInterface.OnClickListener onClickNeutralListener;
 
     //Components
     private AppCompatEditText valueEditText;
     private TextView currencyTextView;
     private ImageButton backspaceButtun;
     private Button dotButton;
-    private Button equalButton;
+    private Button clearButton;
     private Button oneButton;
     private Button twoButton;
     private Button threeButton;
@@ -43,16 +65,44 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
     private Button eightButton;
     private Button nineButton;
     private Button zeroButton;
+    private Button positiveButton;
+    private Button negativeButton;
+    private Button neutralButton;
 
     public CalculatorAlertDialog(@NonNull Context context) {
         super(context);
-
-        super.setView(R.layout.dialog_calculator);
+        setCustomView();
     }
 
     public CalculatorAlertDialog(@NonNull Context context, @StyleRes int themeResId) {
         super(context, themeResId);
+        setCustomView();
+    }
 
+
+    public CalculatorAlertDialog(@NonNull Context context, OnInputLongListener listener) {
+        super(context);
+        onInputLongListener = listener;
+        setCustomView();
+    }
+    public CalculatorAlertDialog(@NonNull Context context, OnInputDoubleListener listener) {
+        super(context);
+        onInputDoubleListener = listener;
+        setCustomView();
+    }
+
+    public CalculatorAlertDialog(@NonNull Context context, @StyleRes int themeResId, OnInputLongListener listener) {
+        super(context, themeResId);
+        onInputLongListener = listener;
+        setCustomView();
+    }
+    public CalculatorAlertDialog(@NonNull Context context, @StyleRes int themeResId, OnInputDoubleListener listener) {
+        super(context, themeResId);
+        onInputDoubleListener = listener;
+        setCustomView();
+    }
+
+    private void setCustomView(){
         super.setView(R.layout.dialog_calculator);
     }
 
@@ -70,7 +120,7 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
     }
 
     private void init() {
-        value = 0.0;
+        value = "";
         initComponents();
         initListeners();
 
@@ -91,8 +141,12 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
         twoButton= (Button)dialog.findViewById(R.id.calculator_2);
         oneButton= (Button)dialog.findViewById(R.id.calculator_1);
         zeroButton= (Button)dialog.findViewById(R.id.calculator_0);
-        equalButton= (Button)dialog.findViewById(R.id.calculator_eq);
+        clearButton = (Button)dialog.findViewById(R.id.calculator_ce);
         dotButton= (Button)dialog.findViewById(R.id.calculator_dot);
+
+        positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        neutralButton = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
     }
     private void initListeners() {
         valueEditText.setOnClickListener(this);
@@ -108,8 +162,12 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
         twoButton.setOnClickListener(this);
         oneButton.setOnClickListener(this);
         zeroButton.setOnClickListener(this);
-        equalButton.setOnClickListener(this);
+        clearButton.setOnClickListener(this);
         dotButton.setOnClickListener(this);
+
+        positiveButton.setOnClickListener(this);
+        negativeButton.setOnClickListener(this);
+        neutralButton.setOnClickListener(this);
     }
 
 
@@ -137,15 +195,71 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
             onClickNineButton();
         }else if(view.getId() == dotButton.getId()){
             onClickDotButton();
-        }else if(view.getId() == equalButton.getId()){
-            onClickEqualButton();
+        }else if(view.getId() == clearButton.getId()){
+            onClickClearButton();
         }else if(view.getId() == currencyTextView.getId()){
             onClickCurrencyTextView();
         }else if(view.getId() == valueEditText.getId()){
             onClickValueEditText();
         }else if(view.getId() == backspaceButtun.getId()){
             onClickBackspaceButton();
+        }else if(view.getId() == positiveButton.getId()){
+            onclickPositiveButton();
+        }else if(view.getId() == negativeButton.getId()){
+            onclickNegativeButton();
+        }else if(view.getId() == neutralButton.getId()){
+            onclickNeutralButton();
         }
+    }
+
+    private void onclickPositiveButton() {
+
+        if(onInputDoubleListener != null){
+            boolean consumedEvent = onInputDoubleListener.onInputDouble(this.dialog, parseDoubleValue());
+
+            if(!consumedEvent){
+                dialog.dismiss();
+            }
+        }else if(onInputLongListener != null){
+            boolean consumedEvent = onInputLongListener.onInputLong(dialog, parseLongValue());
+
+            if(!consumedEvent){
+                dialog.dismiss();
+            }
+        }else if (onClickPositiveListener != null){
+            onClickPositiveListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+        }else if (onClickNegativeListener != null){
+            onClickNegativeListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+        }else if (onClickNeutralListener != null){
+            onClickNeutralListener.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+        }
+
+    }
+
+    private Long parseLongValue() {
+        Long longValue = 0L;
+        if(!value.trim().isEmpty() && !value.equals(",")) {
+            String strValue = value.replace(",", ".");
+            longValue = Long.valueOf(strValue);
+        }
+        return longValue;
+    }
+
+    private Double parseDoubleValue() {
+        Double doubleValue = 0.0;
+        if(!value.trim().isEmpty() && !value.equals(",")) {
+            String strValue = value.replace(",", ".");
+            doubleValue = Double.valueOf(strValue);
+        }
+        return doubleValue;
+    }
+
+    private void onclickNegativeButton() {
+
+    }
+
+    private void onclickNeutralButton() {
+
     }
 
     private void onClickThreeButton() {
@@ -178,11 +292,15 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
     }
 
     private void onClickDotButton() {
-        //TODO
+        if(!value.contains(",")){
+            value+=",";
+        }
+        setViews();
     }
 
-    private void onClickEqualButton() {
-        //TODO
+    private void onClickClearButton() {
+        value = "";
+        setViews();
     }
 
     private void onClickNineButton() {
@@ -202,34 +320,107 @@ public class CalculatorAlertDialog extends AlertDialog.Builder implements View.O
     }
 
     private void onClickCurrencyTextView() {
-        //TODO
+        Toast.makeText(getContext(), currencyTextView.getText(), Toast.LENGTH_SHORT).show();
     }
 
     private void onClickValueEditText() {
-        //TODO
+        Toast.makeText(getContext(), valueEditText.getText(), Toast.LENGTH_SHORT).show();
     }
 
     private void onClickBackspaceButton() {
-        String strValue = value.toString();
 
-        strValue = strValue.length() > 0 ? strValue.substring(0, strValue.length()-1): "0.0";
-
-        value = Double.valueOf(strValue);
+        value = value.length() > 0 ? value.substring(0, value.length()-1) : "";
 
         setViews();
     }
 
     private void concatValue(String strToConcat){
-        String valueStr = value == 0.0 ? "" : value.toString();
+        if(value.length() < MAX_LENGTH) {
+            value += strToConcat;
 
-        valueStr = valueStr.concat(strToConcat);
-
-        value = Double.valueOf(valueStr);
-
-        setViews();
+            setViews();
+        }
     }
 
     private void setViews(){
-        valueEditText.setText(value == 0.0 ? "0" : value.toString());
+        valueEditText.setText(value);
+    }
+
+    public AlertDialog.Builder setPositiveButton(CharSequence text, OnInputDoubleListener listener) {
+        if(text != null && !text.toString().trim().isEmpty()) {
+            super.setPositiveButton(text, null);
+        }else{
+            super.setPositiveButton(android.R.string.ok, null);
+        }
+        this.onInputDoubleListener = listener;
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(CharSequence text, OnInputLongListener listener) {
+        if(text != null && !text.toString().trim().isEmpty()) {
+            super.setPositiveButton(text, null);
+        }else{
+            super.setPositiveButton(android.R.string.ok, null);
+        }
+
+        this.onInputLongListener = listener;
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(@StringRes int text, OnInputDoubleListener listener) {
+        this.setPositiveButton(getContext().getString(text), listener);
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(@StringRes int text, OnInputLongListener listener) {
+        this.setPositiveButton(getContext().getString(text), listener);
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(OnInputDoubleListener listener) {
+        this.setPositiveButton(null, listener);
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(OnInputLongListener listener) {
+        this.setPositiveButton(null, listener);
+        return this;
+    }
+
+    @Override
+    public AlertDialog.Builder setPositiveButton(CharSequence text, DialogInterface.OnClickListener listener) {
+        super.setPositiveButton(text,null);
+        this.onClickPositiveListener = listener;
+        return this;
+    }
+
+    @Override
+    public AlertDialog.Builder setPositiveButton(@StringRes int textId, DialogInterface.OnClickListener listener) {
+        super.setPositiveButton(textId,null);
+        this.onClickPositiveListener = listener;
+        return this;
+    }
+
+    @Override
+    public AlertDialog.Builder setNegativeButton(CharSequence text, DialogInterface.OnClickListener listener) {
+        super.setNegativeButton(text, null);
+        this.onClickNegativeListener = listener;
+        return this;
+    }
+
+    @Override
+    public AlertDialog.Builder setNegativeButton(@StringRes int textId, DialogInterface.OnClickListener listener) {
+        super.setNegativeButton(textId, null);
+        this.onClickNegativeListener = listener;
+        return this;
+    }
+
+    @Override
+    public AlertDialog.Builder setNeutralButton(CharSequence text, DialogInterface.OnClickListener listener) {
+        super.setNeutralButton(text, null);
+        this.onClickNeutralListener = listener;
+        return this;
+    }
+
+    @Override
+    public AlertDialog.Builder setNeutralButton(@StringRes int textId, DialogInterface.OnClickListener listener) {
+        super.setNeutralButton(textId, null);
+        this.onClickNeutralListener = listener;
+        return this;
     }
 }

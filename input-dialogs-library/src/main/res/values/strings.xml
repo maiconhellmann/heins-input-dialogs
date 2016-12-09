@@ -16,6 +16,7 @@
     <string name="calculator_div">/</string>
     <string name="calculator_mul">*</string>
     <string name="calculator_eq">=</string>
+    <string name="calculator_ce">CE</string>
     <string name="calculator_dot">,</string>
     <string name="currency">R$</string>
 </resources>

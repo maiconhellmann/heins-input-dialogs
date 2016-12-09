@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Heins Input Dialogs Demo</string>
+
+    <string name="input_calculator_double">Calculator input(Double)</string>
+    <string name="input_calculator_long">Calculator input(Long)</string>
+    <string name="null_value">Null value</string>
 </resources>

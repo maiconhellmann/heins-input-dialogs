@@ -27,7 +27,9 @@
             android:clickable="false"
             android:focusableInTouchMode="false"
             android:focusable="false"
+            android:maxLines="1"
             android:lines="1"
+            android:maxLength="10"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryText"
             android:layout_toRightOf="@+id/calculator_currency"
@@ -194,14 +196,13 @@
             style="@style/Widget.AppCompat.Button.Borderless"/>
 
         <Button
-            android:id="@+id/calculator_eq"
-            android:visibility="invisible"
+            android:id="@+id/calculator_ce"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/calculator_button_text_size"
-            android:text="@string/calculator_eq"
+            android:text="@string/calculator_ce"
             style="@style/Widget.AppCompat.Button.Borderless"/>
 
     </LinearLayout>

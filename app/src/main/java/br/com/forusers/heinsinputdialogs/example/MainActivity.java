@@ -1,12 +1,14 @@
 package br.com.forusers.heinsinputdialogs.example;
 
-import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import br.com.forusers.heinsinputdialogs.CalculatorAlertDialog;
-import br.com.forusers.heinsinputdialogs.R;
+import br.com.forusers.heinsinputdialogs.example.R;
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,17 +16,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new CalculatorAlertDialog(this).setPositiveButton("ok", new DialogInterface.OnClickListener() {
+    }
+
+    public void onClickCalculatorInput(View view) {
+        CalculatorAlertDialog dialog = new CalculatorAlertDialog(this);
+
+        dialog.setPositiveButton(new OnInputDoubleListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getApplicationContext(), "ok", Toast.LENGTH_SHORT).show();
+            public boolean onInputDouble(AlertDialog dialog, Double value) {
+                Toast.makeText(getApplicationContext(),
+                        value != null ? value.toString() : getString(R.string.null_value),
+                        Toast.LENGTH_SHORT)
+                            .show();
+                return false;
             }
-        })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
+        });
+
+        dialog.show();
     }
 }
