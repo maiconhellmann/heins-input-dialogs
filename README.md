@@ -44,7 +44,7 @@ dependencies {
 
 ## Calculator Input Dialog
 It is an Input Dialog for Double or Long value input.
-This component has two types of listeners: _OnInputDoubleListener_ and _OnInputLongListener_ that must be parameterized by the _setPositiveButton()_ method.
+This component has a double listener: _OnInputDoubleListener_ that must be parameterized by the _setPositiveButton()_ method.
 
 <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/calculator_input_dialog.png" alt="Calculator Input Dialog" width="240px">
 
@@ -66,3 +66,18 @@ dialog.setPositiveButton(new OnInputDoubleListener() {
 dialog.show();
 ```
 
+##HeinsInputDialog
+It is an Input Dialog that provides facilitators for inputting values.
+It provides listeners for the _String_, _Double_, and _Long_ data types, provides method to customize keyboard type, provides getters of all components, fires _posiviteButton_ when you click OK on a clean design...
+//TODO Imagens  
+
+### Usage
+//TODO usage HeinsInputDialog
+
+##HeinsDatePickerDialog  
+It is a specialization of the _DialogFragment_ class that implements _DatePickerDialog.OnDateSetListener_.
+This _DatePicker_ provides facilitators for the use of dates.
+//TODO Imagens  
+
+### Usage
+//TODO usage HeinsDatePickerDialog
