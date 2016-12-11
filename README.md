@@ -68,16 +68,39 @@ dialog.show();
 
 ##HeinsInputDialog
 It is an Input Dialog that provides facilitators for inputting values.
-It provides listeners for the _String_, _Double_, and _Long_ data types, provides method to customize keyboard type, provides getters of all components, fires _posiviteButton_ when you click OK on a clean design...
-//TODO Imagens  
+It provides listeners for the _String_, _Double_, and _Long_ data types, provides method to customize keyboard type, provides getters of all components, fires _posiviteButton_ when you click OK on a clean design...  
+//TODO Images  
 
 ### Usage
-//TODO usage HeinsInputDialog
+```
+ HeinsInputDialog dialog = new HeinsInputDialog(this);
+dialog.setPositiveButton(new OnInputDoubleListener() {
+    @Override
+    public boolean onInputDouble(AlertDialog dialog, Double value) {
+        lastDoubleHeinsInputDialog = value;
+        setViews();
+        return false;
+    }
+});
+dialog.setTitle(R.string.heins_input_dialog);
+dialog.setHint(R.string.input_value);
+dialog.show();
+```
 
 ##HeinsDatePickerDialog  
 It is a specialization of the _DialogFragment_ class that implements _DatePickerDialog.OnDateSetListener_.
-This _DatePicker_ provides facilitators for the use of dates.
-//TODO Imagens  
+This _DatePicker_ provides facilitators for the use of dates.  
+//TODO Images  
 
 ### Usage
-//TODO usage HeinsDatePickerDialog
+```
+HeinsDatePickerDialog dialog = new HeinsDatePickerDialog();
+dialog.setListener(new OnSelectDateListener() {
+  @Override
+  public void onSelectDate(Date date) throws Exception {
+    lastDate = date;
+    setViews();
+  }
+});
+dialog.show(getSupportFragmentManager(), getClass().getSimpleName());
+```
