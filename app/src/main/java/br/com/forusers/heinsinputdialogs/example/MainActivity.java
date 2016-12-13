@@ -19,13 +19,15 @@ import br.com.forusers.heinsinputdialogs.CalculatorInputDialog;
 import br.com.forusers.heinsinputdialogs.HeinsDatePickerDialog;
 import br.com.forusers.heinsinputdialogs.HeinsInputDialog;
 import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputLongListener;
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputStringListener;
 import br.com.forusers.heinsinputdialogs.interfaces.OnSelectDateListener;
 
 public class MainActivity extends AppCompatActivity {
 
     private java.util.Date lastDate;
     private Double lastValueCalculator;
-    private Double lastDoubleHeinsInputDialog;
+    private String lastValueHeinsInputDialog;
 
     //    Components
     private TextView lastValueValueCalculatorTextView;
@@ -88,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                         : getString(R.string.last_value, ""));
 
         lastDoubleHeinsInputDialogTextView.setText(
-                lastDoubleHeinsInputDialog != null
-                        ? getString(R.string.last_value, lastDoubleHeinsInputDialog.toString())
+                lastValueHeinsInputDialog != null
+                        ? getString(R.string.last_value, lastValueHeinsInputDialog)
                         : getString(R.string.last_value, ""));
     }
 
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.setPositiveButton(new OnInputDoubleListener() {
                 @Override
                 public boolean onInputDouble(AlertDialog dialog, Double value) {
-                    lastDoubleHeinsInputDialog = value;
+                    lastValueHeinsInputDialog = value.toString();
                     setViews();
                     return false;
                 }
@@ -143,6 +145,48 @@ public class MainActivity extends AppCompatActivity {
             dialog.setTitle(R.string.heins_input_dialog);
             dialog.setHint(R.string.input_value);
             dialog.show();
+
+        } catch (Exception e) {
+            showErrorMessage(e);
+        }
+    }
+
+    public void onClickHeinsInputDialogLong(View view) {
+
+        try {
+            HeinsInputDialog dialog = new HeinsInputDialog(this);
+            dialog.setPositiveButton(new OnInputLongListener() {
+                @Override
+                public boolean onInputLong(AlertDialog dialog, Long value) {
+                    lastValueHeinsInputDialog = value.toString();
+                    setViews();
+                    return false;
+                }
+            });
+            dialog.setTitle(R.string.heins_input_dialog);
+            dialog.setHint(R.string.input_value);
+            dialog.show();
+
+        } catch (Exception e) {
+            showErrorMessage(e);
+        }
+    }
+
+    public void onClickHeinsInputDialogString(View view) {
+        try{
+            HeinsInputDialog dialog = new HeinsInputDialog(this);
+            dialog.setPositiveButton(new OnInputStringListener() {
+                @Override
+                public boolean onInputString(AlertDialog dialog, String value) {
+                    lastValueHeinsInputDialog = value;
+                    setViews();
+                    return false;
+                }
+            });
+            dialog.setTitle(R.string.heins_input_dialog);
+            dialog.setHint(R.string.input_value);
+            dialog.show();
+
         } catch (Exception e) {
             showErrorMessage(e);
         }
@@ -163,4 +207,5 @@ public class MainActivity extends AppCompatActivity {
 
         b.show();
     }
+
 }

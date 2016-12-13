@@ -3,6 +3,7 @@ It is a library with several commonly used Input Dialogs implementations. Impelm
 
   <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/main_activity.png" alt="Calculator Input Dialog" width="240px">
   <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/calculator_input_dialog.png" alt="Calculator Input Dialog" width="240px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_input_dialog.png" alt="Calculator Input Dialog" width="240px">
   <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_date_picker_dialog.png" alt="Calculator Input Dialog" width="240px">
 
 
@@ -38,7 +39,7 @@ Module/app _build.gradle_:
 ```
 dependencies {
     // ... other dependencies here
-    compile 'br.com.forusers.heinsinputdialogs:input-dialogs-library:0.1.3'
+    compile 'br.com.forusers.heinsinputdialogs:input-dialogs-library:0.1.4'
 }
 ```
 
@@ -68,10 +69,12 @@ dialog.show();
 
 ##HeinsInputDialog
 It is an Input Dialog that provides facilitators for inputting values.
-It provides listeners for the _String_, _Double_, and _Long_ data types, provides method to customize keyboard type, provides getters of all components, fires _posiviteButton_ when you click OK on a clean design...  
-//TODO Images  
+It provides listeners for the _String_, _Double_, and _Long_ data types, provides method to customize keyboard type, provides getters of all components, fires _posiviteButton_ when you click OK on a clean design...
+<img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_input_dialog.png" alt="Calculator Input Dialog" width="240px">
+
 
 ### Usage
+Available listeners: _OnInputDoubleListener_, _OnInputStringListener_ and _OnInputLongListener_.
 ```
  HeinsInputDialog dialog = new HeinsInputDialog(this);
 dialog.setPositiveButton(new OnInputDoubleListener() {
@@ -90,7 +93,7 @@ dialog.show();
 ##HeinsDatePickerDialog  
 It is a specialization of the _DialogFragment_ class that implements _DatePickerDialog.OnDateSetListener_.
 This _DatePicker_ provides facilitators for the use of dates.  
-//TODO Images  
+<img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_date_picker_dialog.png" alt="Calculator Input Dialog" width="240px">
 
 ### Usage
 ```

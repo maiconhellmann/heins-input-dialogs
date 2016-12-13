@@ -2,10 +2,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
 
+    <!--Calculator-->
     <dimen name="calculator_button_padding">10dp</dimen>
     <dimen name="calculator_button_text_size">26sp</dimen>
     <dimen name="calculator_result_padding">10dp</dimen>
     <dimen name="calculator_footer_size">50dp</dimen>
+
+    <!--HeinsInputDialog-->
 
 </resources>

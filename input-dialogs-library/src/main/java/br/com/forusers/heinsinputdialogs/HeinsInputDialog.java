@@ -8,18 +8,30 @@ import android.support.annotation.StyleRes;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
+import java.text.DecimalFormatSymbols;
 
-public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClickListener {
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputLongListener;
+import br.com.forusers.heinsinputdialogs.interfaces.OnInputStringListener;
+
+public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClickListener, DialogInterface.OnKeyListener {
 
     private String hint;
     private String value;
+
+    /**
+     * Dialog reference initialized when Dialog.show called
+     */
     private AlertDialog dialog;
 
+    //Components
     private Button positiveButton;
     private Button negativeButton;
     private Button neutralButton;
@@ -27,10 +39,14 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
     private TextInputLayout editTextLayout;
     private LinearLayout rootView;
 
+    //Listeners
     private OnInputDoubleListener onInputDoubleListener;
+    private OnInputLongListener onInputLongListener;
+    private OnInputStringListener onInputStringListener;
     private DialogInterface.OnClickListener onClickPositiveListener;
     private DialogInterface.OnClickListener onClickNegativeListener;
     private DialogInterface.OnClickListener onClickNeutralListener;
+    private String separator;
 
     public HeinsInputDialog(@NonNull Context context) {
         super(context);
@@ -75,6 +91,9 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
         value=string;
     }
 
+    /**
+     * Get component references and config initial behaviors
+     */
     private void initComponents() {
         editText = (TextInputEditText)dialog.findViewById(R.id.inputDialog_editText);
         editTextLayout = (TextInputLayout)dialog.findViewById(R.id.inputDialog_editTextLayout);
@@ -83,6 +102,26 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
         positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         neutralButton = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+
+        //Show keyboard
+        if(dialog.getWindow() != null) {
+            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+
+        if(onInputDoubleListener != null){
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        }else if(onInputLongListener != null){
+            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }else if(onInputStringListener != null){
+            editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+
+        if(editText != null)
+            editText.selectAll();
+
+
+        //Locale settings
+        separator = String.valueOf(DecimalFormatSymbols.getInstance().getDecimalSeparator());
     }
 
     private void initListeners() {
@@ -97,6 +136,8 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
         if(neutralButton != null) {
             neutralButton.setOnClickListener(this);
         }
+        //OK or DONE event
+        dialog.setOnKeyListener(this);
     }
 
 
@@ -112,10 +153,22 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
     }
 
     private void onclickPositiveButton() {
-        if(onInputDoubleListener != null){
+        if(onInputDoubleListener != null) {
             boolean consumedEvent = onInputDoubleListener.onInputDouble(this.dialog, parseDoubleValue());
 
-            if(!consumedEvent){
+            if (!consumedEvent) {
+                dialog.dismiss();
+            }
+        }else if (onInputLongListener != null){
+            boolean consumedEvent = onInputLongListener.onInputLong(this.dialog, parseLongValue());
+
+            if (!consumedEvent) {
+                dialog.dismiss();
+            }
+        }else if (onInputStringListener != null){
+            boolean consumedEvent = onInputStringListener.onInputString(this.dialog, parseStringValue());
+
+            if (!consumedEvent) {
                 dialog.dismiss();
             }
         }else if (onClickPositiveListener != null){
@@ -127,9 +180,19 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
         }
     }
 
+    private String parseStringValue() {
+        return editText.getText().toString();
+    }
+
+    private Long parseLongValue() {
+        return parseDoubleValue().longValue();
+    }
+
     private Double parseDoubleValue() {
+        value = editText.getText().toString();
+
         Double doubleValue = 0.0;
-        if(!value.trim().isEmpty() && !value.equals(",")) {
+        if(!value.trim().isEmpty() && !value.equals(",") && !value.equals(".") ) {
             String strValue = value.replace(",", ".");
             doubleValue = Double.valueOf(strValue);
         }
@@ -164,6 +227,44 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
         return this;
     }
     public AlertDialog.Builder setPositiveButton(OnInputDoubleListener listener) {
+        this.setPositiveButton(null, listener);
+        return this;
+    }
+
+    public AlertDialog.Builder setPositiveButton(CharSequence text, OnInputLongListener listener) {
+        if(text != null && !text.toString().trim().isEmpty()) {
+            super.setPositiveButton(text, null);
+        }else{
+            super.setPositiveButton(android.R.string.ok, null);
+        }
+        this.onInputLongListener = listener;
+        return this;
+    }
+
+    public AlertDialog.Builder setPositiveButton(@StringRes int text, OnInputLongListener listener) {
+        this.setPositiveButton(getContext().getString(text), listener);
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(OnInputLongListener listener) {
+        this.setPositiveButton(null, listener);
+        return this;
+    }
+
+    public AlertDialog.Builder setPositiveButton(CharSequence text, OnInputStringListener listener) {
+        if(text != null && !text.toString().trim().isEmpty()) {
+            super.setPositiveButton(text, null);
+        }else{
+            super.setPositiveButton(android.R.string.ok, null);
+        }
+        this.onInputStringListener = listener;
+        return this;
+    }
+
+    public AlertDialog.Builder setPositiveButton(@StringRes int text, OnInputStringListener listener) {
+        this.setPositiveButton(getContext().getString(text), listener);
+        return this;
+    }
+    public AlertDialog.Builder setPositiveButton(OnInputStringListener listener) {
         this.setPositiveButton(null, listener);
         return this;
     }
@@ -208,5 +309,71 @@ public class HeinsInputDialog extends AlertDialog.Builder implements View.OnClic
         super.setNeutralButton(textId, null);
         this.onClickNeutralListener = listener;
         return this;
+    }
+
+    @Override
+    public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+        //Close dialog after OK or DONE
+        if(keyCode== KeyEvent.KEYCODE_ENTER) {
+            HeinsInputDialog.this.dialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public String getHint() {
+        return hint;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public AlertDialog getDialog() {
+        return dialog;
+    }
+
+    public Button getPositiveButton() {
+        return positiveButton;
+    }
+
+    public Button getNegativeButton() {
+        return negativeButton;
+    }
+
+    public Button getNeutralButton() {
+        return neutralButton;
+    }
+
+    public TextInputEditText getEditText() {
+        return editText;
+    }
+
+    public TextInputLayout getEditTextLayout() {
+        return editTextLayout;
+    }
+
+    public LinearLayout getRootView() {
+        return rootView;
+    }
+
+    /**
+     * Set the double listener to positive button see @{@link HeinsInputDialog#setPositiveButton(CharSequence, OnInputDoubleListener)}
+     */
+    public void setListener(OnInputDoubleListener listener){
+        this.onInputDoubleListener = listener;
+    }
+    /**
+     * Set the double listener to positive button see @{@link HeinsInputDialog#setPositiveButton(CharSequence, OnInputStringListener)}
+     */
+    public void setListener(OnInputStringListener listener){
+        this.onInputStringListener = listener;
+    }
+    /**
+     * Set the double listener to positive button see @{@link HeinsInputDialog#setPositiveButton(CharSequence, OnInputLongListener)}
+     */
+    public void setListener(OnInputLongListener listener){
+        this.onInputLongListener = listener;
     }
 }

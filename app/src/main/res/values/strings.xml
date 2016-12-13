@@ -14,6 +14,9 @@
 
     <string name="input_value">Input a value</string>
     <string name="show_dialog">Show</string>
+    <string name="show_double">Double</string>
+    <string name="show_long">Long</string>
+    <string name="show_string">String</string>
     <string name="last_value">Last value: %1$s</string>
     <string name="null_value">Null value</string>
     <string name="github">Github</string>

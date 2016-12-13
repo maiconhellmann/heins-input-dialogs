@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.Currency;
@@ -28,7 +27,10 @@ import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
  */
 public class CalculatorInputDialog extends AlertDialog.Builder implements View.OnClickListener{
 
-    private static final int MAX_LENGTH = 10;
+    /**
+     * Max input length of the value Text View
+     */
+    private int maxInputLength = 10;
 
     /**
      * Dialog reference
@@ -45,8 +47,19 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
      */
     private OnInputDoubleListener onInputDoubleListener;
 
+    /**
+     * Listener to positive button
+     */
     private DialogInterface.OnClickListener onClickPositiveListener;
+
+    /**
+     * Listener to negative button
+     */
     private DialogInterface.OnClickListener onClickNegativeListener;
+
+    /**
+     * Listener to neutral button
+     */
     private DialogInterface.OnClickListener onClickNeutralListener;
 
     //Components
@@ -68,7 +81,9 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
     private Button positiveButton;
     private Button negativeButton;
     private Button neutralButton;
+
     private String separator;
+    private Currency currency;
 
     public CalculatorInputDialog(@NonNull Context context) {
         super(context);
@@ -138,12 +153,9 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
         negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         neutralButton = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
 
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        currencyTextView.setText(currency.getSymbol());
-
+        //Locale settings
+        this.currency = Currency.getInstance(Locale.getDefault());
         separator = String.valueOf(DecimalFormatSymbols.getInstance().getDecimalSeparator());
-
-        dotButton.setText(separator);
     }
 
 
@@ -334,7 +346,7 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
     }
 
     private void concatValue(String strToConcat){
-        if(value.length() < MAX_LENGTH) {
+        if(value.length() < maxInputLength) {
             value += strToConcat;
 
             setViews();
@@ -342,6 +354,8 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
     }
 
     private void setViews(){
+        dotButton.setText(separator);
+        currencyTextView.setText(currency.getSymbol());
         valueEditText.setText(value);
     }
 
@@ -420,5 +434,105 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
         });
 
         b.show();
+    }
+
+    public Button getDotButton() {
+        return dotButton;
+    }
+
+    public Button getClearButton() {
+        return clearButton;
+    }
+
+    public Button getOneButton() {
+        return oneButton;
+    }
+
+    public Button getTwoButton() {
+        return twoButton;
+    }
+
+    public Button getThreeButton() {
+        return threeButton;
+    }
+
+    public ImageButton getBackspaceButtun() {
+        return backspaceButtun;
+    }
+
+    public TextView getCurrencyTextView() {
+        return currencyTextView;
+    }
+
+    public AppCompatEditText getValueEditText() {
+        return valueEditText;
+    }
+
+    public Button getFourButton() {
+        return fourButton;
+    }
+
+    public Button getFiveButton() {
+        return fiveButton;
+    }
+
+    public Button getSixButton() {
+        return sixButton;
+    }
+
+    public Button getSevenButton() {
+        return sevenButton;
+    }
+
+    public Button getEightButton() {
+        return eightButton;
+    }
+
+    public Button getNineButton() {
+        return nineButton;
+    }
+
+    public Button getZeroButton() {
+        return zeroButton;
+    }
+
+    public Button getPositiveButton() {
+        return positiveButton;
+    }
+
+    public Button getNegativeButton() {
+        return negativeButton;
+    }
+
+    public Button getNeutralButton() {
+        return neutralButton;
+    }
+
+    public String getSeparator() {
+        return separator;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public AlertDialog getDialog() {
+        return dialog;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setSeparator(String separator) {
+        this.separator = separator;
+    }
+
+    public int getMaxInputLength() {
+        return maxInputLength;
+    }
+
+    public void setMaxInputLength(int maxInputLength) {
+        this.maxInputLength = maxInputLength;
     }
 }

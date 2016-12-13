@@ -102,12 +102,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/last_value"/>
-                    <Button
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Base.Widget.AppCompat.Button.Colored"
-                        android:text="@string/show_dialog"
-                        android:onClick="onClickHeinsInputDialogDouble"/>
+                        android:orientation="horizontal">
+                        <Button
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:text="@string/show_double"
+                            android:onClick="onClickHeinsInputDialogDouble"/>
+                        <Button
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:text="@string/show_long"
+                            android:onClick="onClickHeinsInputDialogLong"/>
+                        <Button
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Base.Widget.AppCompat.Button.Colored"
+                            android:text="@string/show_string"
+                            android:onClick="onClickHeinsInputDialogString"/>
+                    </LinearLayout>
+
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
