@@ -81,13 +81,12 @@ Available listeners: _OnInputDoubleListener_, _OnInputStringListener_ and _OnInp
 dialog.setPositiveButton(new OnInputDoubleListener() {
     @Override
     public boolean onInputDouble(AlertDialog dialog, Double value) {
-        lastDoubleHeinsInputDialog = value;
-        setViews();
-        return false;
+        //Do something
+        return false;//return if consume event
     }
 });
-dialog.setTitle(R.string.heins_input_dialog);
-dialog.setHint(R.string.input_value);
+dialog.setTitle("Dialog title");
+dialog.setHint("Component hint");
 dialog.show();
 ```
 
@@ -102,8 +101,7 @@ HeinsDatePickerDialog dialog = new HeinsDatePickerDialog();
 dialog.setListener(new OnSelectDateListener() {
   @Override
   public void onSelectDate(Date date) throws Exception {
-    lastDate = date;
-    setViews();
+    //Do somenthing
   }
 });
 dialog.show(getSupportFragmentManager(), getClass().getSimpleName());
