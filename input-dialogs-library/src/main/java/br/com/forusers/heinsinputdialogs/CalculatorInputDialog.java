@@ -7,11 +7,18 @@ import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Currency;
+import java.util.Locale;
 
 import br.com.forusers.heinsinputdialogs.interfaces.OnInputDoubleListener;
 
@@ -61,6 +68,7 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
     private Button positiveButton;
     private Button negativeButton;
     private Button neutralButton;
+    private String separator;
 
     public CalculatorInputDialog(@NonNull Context context) {
         super(context);
@@ -129,7 +137,26 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
         positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         negativeButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
         neutralButton = dialog.getButton(DialogInterface.BUTTON_NEUTRAL);
+
+        Currency currency = Currency.getInstance(Locale.getDefault());
+        currencyTextView.setText(currency.getSymbol());
+
+        separator = String.valueOf(DecimalFormatSymbols.getInstance().getDecimalSeparator());
+
+        dotButton.setText(separator);
     }
+
+
+    public Double parseDouble(String value) throws ParseException{
+        double doubleValue=0.0;
+
+        if(!value.trim().isEmpty() && !value.equals(separator)){
+            doubleValue = Double.valueOf(value.replace(",", "."));
+        }
+        return doubleValue;
+    }
+
+
     private void initListeners() {
         valueEditText.setOnClickListener(this);
         currencyTextView.setOnClickListener(this);
@@ -196,28 +223,32 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
 
     private void onclickPositiveButton() {
 
-        if (onInputDoubleListener != null) {
+        try {
+            if (onInputDoubleListener != null) {
 
-            boolean consumedEvent = onInputDoubleListener.onInputDouble(this.dialog, parseDoubleValue());
+                boolean consumedEvent = onInputDoubleListener.onInputDouble(this.dialog, parseDoubleValue());
 
-            if (!consumedEvent) {
-                dialog.dismiss();
+                if (!consumedEvent) {
+                    dialog.dismiss();
+                }
+            } else if (onClickPositiveListener != null) {
+                onClickPositiveListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+            } else if (onClickNegativeListener != null) {
+                onClickNegativeListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+            } else if (onClickNeutralListener != null) {
+                onClickNeutralListener.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
             }
-        } else if (onClickPositiveListener != null) {
-            onClickPositiveListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-        } else if (onClickNegativeListener != null) {
-            onClickNegativeListener.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
-        } else if (onClickNeutralListener != null) {
-            onClickNeutralListener.onClick(dialog, DialogInterface.BUTTON_NEUTRAL);
+        }catch (Exception e){
+            showErrorMessage(e);
         }
-
     }
 
-    private Double parseDoubleValue() {
+    private Double parseDoubleValue() throws ParseException {
         Double doubleValue = 0.0;
         if(!value.trim().isEmpty() && !value.equals(",")) {
-            String strValue = value.replace(",", ".");
-            doubleValue = Double.valueOf(strValue);
+//            String strValue = value.replace(",", ".");
+//            doubleValue = Double.valueOf(strValue);
+            doubleValue = parseDouble(value);
         }
         return doubleValue;
     }
@@ -260,8 +291,8 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
     }
 
     private void onClickDotButton() {
-        if(!value.contains(",")){
-            value+=",";
+        if(!value.contains(separator)){
+            value+= separator;
         }
         setViews();
     }
@@ -373,5 +404,21 @@ public class CalculatorInputDialog extends AlertDialog.Builder implements View.O
         super.setNeutralButton(textId, null);
         this.onClickNeutralListener = listener;
         return this;
+    }
+
+    private void showErrorMessage(Exception e){
+        Log.e(getClass().getSimpleName(), getContext().getString(R.string.error), e);
+
+        AlertDialog.Builder b = new AlertDialog.Builder(this.getContext());
+        b.setTitle(R.string.error);
+        b.setMessage(e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName());
+        b.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        b.show();
     }
 }

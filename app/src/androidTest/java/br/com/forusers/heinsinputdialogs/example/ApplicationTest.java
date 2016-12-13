@@ -1,4 +1,4 @@
-package br.com.forusers.heinsinputdialogs;
+package br.com.forusers.heinsinputdialogs.example;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

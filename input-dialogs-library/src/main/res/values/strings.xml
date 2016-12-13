@@ -19,4 +19,5 @@
     <string name="calculator_ce">CE</string>
     <string name="calculator_dot">,</string>
     <string name="currency">R$</string>
+    <string name="error">Error</string>
 </resources>
