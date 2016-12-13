@@ -106,3 +106,23 @@ dialog.setListener(new OnSelectDateListener() {
 });
 dialog.show(getSupportFragmentManager(), getClass().getSimpleName());
 ```
+
+## Donation
+You can support the project and thank the author for his hard work.
+
+<a href='https://pledgie.com/campaigns/33080'><img alt='Click here to lend your support to: Heins Input Dialog Project and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/33080.png?skin_name=chrome' border='0' ></a>
+
+**PayPal**
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HUA4MXUNW3TSW">
+  <img src="https://www.paypalobjects.com/pt_BR/BR/i/btn/btn_donateCC_LG.gif"/>
+</a>
+
+## Contributing
+Want to contribute? You are welcome! 
+Note that all pull request should go to `dev` branch.
+
+Developed By
+------------
+
+* Maicon Hellmann - <maiconhellmann@gmail.com>
