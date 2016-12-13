@@ -1,10 +1,10 @@
 # heins-input-dialogs
 It is a library with several commonly used Input Dialogs implementations. Impelments follow the guidelines of Google Materials Design and always with a clean and intuitive layout.
 
-  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/main_activity.png" alt="Calculator Input Dialog" width="240px">
-  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/calculator_input_dialog.png" alt="Calculator Input Dialog" width="240px">
-  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_input_dialog.png" alt="Calculator Input Dialog" width="240px">
-  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_date_picker_dialog.png" alt="Calculator Input Dialog" width="240px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/main_activity.png" alt="Calculator Input Dialog" width="200px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/calculator_input_dialog.png" alt="Calculator Input Dialog" width="200px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_input_dialog.png" alt="Calculator Input Dialog" width="200px">
+  <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_date_picker_dialog.png" alt="Calculator Input Dialog" width="200px">
 
 
 
@@ -70,7 +70,8 @@ dialog.show();
 ##HeinsInputDialog
 It is an Input Dialog that provides facilitators for inputting values.
 It provides listeners for the _String_, _Double_, and _Long_ data types, provides method to customize keyboard type, provides getters of all components, fires _posiviteButton_ when you click OK on a clean design...
-<img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_input_dialog.png" alt="Calculator Input Dialog" width="240px">
+
+<img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/heins_input_dialog.png" alt="Heins Input Dialog" width="240px">
 
 
 ### Usage
