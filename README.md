@@ -1,5 +1,5 @@
 # heins-input-dialogs
-It is a library with several commonly used Input Dialogs implementations. Impelments follow the guidelines of Google Materials Design and always with a clean and intuitive layout.
+It is a library with several commonly used Input Dialogs implementations. Implementation follows the guidelines of Google Materials Design and always with a clean and intuitive layout.
 
   <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/main_activity.png" alt="Calculator Input Dialog" width="200px">
   <img src="https://github.com/maiconhellmann/heins-input-dialogs/blob/master/docs/img/calculator_input_dialog.png" alt="Calculator Input Dialog" width="200px">
